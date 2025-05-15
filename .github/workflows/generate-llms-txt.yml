@@ -48,3 +48,12 @@ jobs:
             llms-help.txt
             llms-docs.txt
             llms-helioscope.txt
+      - name: Upload files to WordPress server via SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H your.server.com >> ~/.ssh/known_hosts
+      
+          scp llms*.txt ssh aurorasolarmulti@34.94.122.55 -p 29986:/www/aurorasolarmulti_703/public/
+
