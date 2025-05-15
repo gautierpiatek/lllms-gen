@@ -46,15 +46,20 @@ jobs:
           EOF
           )" > llms.txt
 
-          npx github:dotenvx/llmstxt gen \
-          https://aurorasolar.com/eu/de/post-sitemap.xml \
-          https://aurorasolar.com/eu/de/page-sitemap.xml \
-          https://aurorasolar.com/eu/de/news-sitemap.xml \
-          https://aurorasolar.com/eu/de/case_studies-sitemap.xml \
-          https://aurorasolar.com/eu/de/resources-sitemap.xml \
-          https://aurorasolar.com/eu/de/events-sitemap.xml \
-          https://aurorasolar.com/eu/de/author-sitemap.xml \
-          --append llms-eu.txt
+          # Create a working directory for temp files (optional)
+          mkdir -p tmp-llms-eu
+
+          # Generate a txt file for each EU sitemap
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/post-sitemap.xml > tmp-llms-eu/post.txt
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/page-sitemap.xml > tmp-llms-eu/page.txt
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/news-sitemap.xml > tmp-llms-eu/news.txt
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/case_studies-sitemap.xml > tmp-llms-eu/case_studies.txt
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/resources-sitemap.xml > tmp-llms-eu/resources.txt
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/events-sitemap.xml > tmp-llms-eu/events.txt
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/author-sitemap.xml > tmp-llms-eu/author.txt
+          
+          # Concatenate all into final llms-eu.txt
+          cat tmp-llms-eu/*.txt > llms-eu.txt
           
           npx github:dotenvx/llmstxt gen https://help.aurorasolar.com/hc/sitemap.xml > llms-help.txt
           npx github:dotenvx/llmstxt gen https://docs.aurorasolar.com/sitemap.xml > llms-docs.txt
