@@ -56,9 +56,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 34.94.122.55 >> ~/.ssh/known_hosts
-          
-          scp -i ~/.ssh/id_ed25519 -P ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=yes \
+
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+          scp -i ~/.ssh/id_ed25519 -P ${{ secrets.SSH_PORT }} \
+          -o StrictHostKeyChecking=yes \
             llms*.txt ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/www/aurorasolarmulti_703/public/
 
 
