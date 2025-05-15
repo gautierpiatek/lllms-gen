@@ -21,14 +21,22 @@ jobs:
 
       - name: Run npx commands to generate files
         run: |
-          npx github:dotenvx/llmstxt gen https://aurorasolar.com/sitemap_index.xml --description '## Subindexes
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/sitemap_index.xml --replace-title 's/\| Aurora Solar$//' --description 'The #1 solar software to design and sell advanced PV systems. See why installers use Aurora to create over 100,000 PV designs every week.
+          
+          ## Subindexes
+          - llms-eu.txt
+          - llms-helioscope.txt
           - llms-help.txt
+          - llms-docs.txt
+
           ## Main Properties
-          - [Aurora Solar Marketing Website](https://aurorasolar.com): Main corporate site showcasing product features, solutions, and resources.
+          - [Aurora Solar Marketing Website](https://aurorasolar.com): Main marketing website showcasing product features, solutions, and resources.
           - [Aurora Solar Help Center](https://help.aurorasolar.com): Support portal with tutorials, troubleshooting, and product documentation.
-          - [Aurora Solar API Documentation](https://docs.aurorasolar.com): Technical documentation for integrating with Aurora’s API.
+          - [Aurora Solar API Documentation](https://docs.aurorasolar.com): Technical documentation for integrating with Aurora's API.
+          - [Helioscope Marketing Website](https://helioscope.aurorasolar.com): Solar design and simulation software for professionals.
+
           ## Localized Marketing Sites
-          - [EU Landing Page](https://aurorasolar.com/eu/): Central hub for Aurora’s European content and region-specific offerings.
+          - [Aurora EU Landing Page](https://aurorasolar.com/eu/): Central hub for Aurora's European content and region-specific offerings.
           - [Aurora Solar France](https://aurorasolar.com/eu/fr/): French-language version of the site with tailored content for France.
           - [Aurora Solar Spain](https://aurorasolar.com/eu/es/): Spanish-language version of the site with tailored content for Spain.
           - [Aurora Solar Germany](https://aurorasolar.com/eu/de/): German-language version of the site with tailored content for Germany.' > llms.txt
