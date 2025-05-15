@@ -53,7 +53,8 @@ jobs:
           https://aurorasolar.com/eu/de/case_studies-sitemap.xml \
           https://aurorasolar.com/eu/de/resources-sitemap.xml \
           https://aurorasolar.com/eu/de/events-sitemap.xml \
-          https://aurorasolar.com/eu/de/author-sitemap.xml > llms-eu.txt
+          https://aurorasolar.com/eu/de/author-sitemap.xml \
+          --append llms-eu.txt
           
           npx github:dotenvx/llmstxt gen https://help.aurorasolar.com/hc/sitemap.xml > llms-help.txt
           npx github:dotenvx/llmstxt gen https://docs.aurorasolar.com/sitemap.xml > llms-docs.txt
