@@ -61,7 +61,42 @@ jobs:
           # Concatenate all into final llms-eu.txt
           cat tmp-llms-eu/*.txt > llms-eu.txt
           
-          npx github:dotenvx/llmstxt gen https://help.aurorasolar.com/hc/sitemap.xml > llms-help.txt
+          # Step 1: Fetch all articles
+          curl -s "https://help.aurorasolar.com/api/v2/help_center/en-us/articles.json?per_page=10000" > help_articles.json
+          
+          # Step 2: Extract unique section IDs
+          jq -r '.articles[].section_id' help_articles.json | sort -u > section_ids.txt
+          
+          # Step 3: Build a map of section_id to section_name
+          declare -A SECTION_NAMES
+          
+          while read -r section_id; do
+            name=$(curl -s "https://help.aurorasolar.com/api/v2/help_center/sections/${section_id}.json" | jq -r '.section.name')
+            SECTION_NAMES["$section_id"]="$name"
+          done < section_ids.txt
+          
+          # Step 4: Start building the final markdown file
+          echo "## Aurora Solar Help Center Articles" > llms-help.txt
+          echo -e "\nGrouped by section.\n" >> llms-help.txt
+          
+          # Step 5: Generate content per section
+          jq -c '.articles[]' help_articles.json | while read -r article; do
+            title=$(echo "$article" | jq -r '.title')
+            url=$(echo "$article" | jq -r '.html_url')
+            sid=$(echo "$article" | jq -r '.section_id')
+            sname="${SECTION_NAMES[$sid]}"
+            echo "$sname|||$title|||$url"
+          done | sort | awk -F '|||' '
+          BEGIN { current="" }
+          {
+            if ($1 != current) {
+              current = $1
+              if (NR > 1) print ""
+              print "### " current
+            }
+            print "- [" $2 "](" $3 ")"
+          }' >> llms-help.txt
+
           npx github:dotenvx/llmstxt gen https://docs.aurorasolar.com/sitemap.xml > llms-docs.txt
           npx github:dotenvx/llmstxt gen https://helioscope.aurorasolar.com/sitemap_index.xml > llms-helioscope.txt
             
