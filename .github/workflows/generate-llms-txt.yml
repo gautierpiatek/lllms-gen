@@ -21,8 +21,11 @@ jobs:
 
       - name: Run npx commands to generate files
         run: |
-          npx github:dotenvx/llmstxt gen https://aurorasolar.com/sitemap_index.xml --replace-title 's/\| Aurora Solar$//' --description 'The #1 solar software to design and sell advanced PV systems. See why installers use Aurora to create over 100,000 PV designs every week.
-          
+          npx github:dotenvx/llmstxt gen https://aurorasolar.com/sitemap_index.xml \
+          --replace-title 's/\| Aurora Solar$//' \
+          --description "$(cat <<'EOF'
+          The #1 solar software to design and sell advanced PV systems. See why installers use Aurora to create over 100,000 PV designs every week.
+
           ## Subindexes
           - llms-eu.txt
           - llms-helioscope.txt
@@ -39,7 +42,9 @@ jobs:
           - [Aurora EU Landing Page](https://aurorasolar.com/eu/): Central hub for Aurora's European content and region-specific offerings.
           - [Aurora Solar France](https://aurorasolar.com/eu/fr/): French-language version of the site with tailored content for France.
           - [Aurora Solar Spain](https://aurorasolar.com/eu/es/): Spanish-language version of the site with tailored content for Spain.
-          - [Aurora Solar Germany](https://aurorasolar.com/eu/de/): German-language version of the site with tailored content for Germany.' > llms.txt
+          - [Aurora Solar Germany](https://aurorasolar.com/eu/de/): German-language version of the site with tailored content for Germany.
+          EOF
+          )" > llms.txt
 
           npx github:dotenvx/llmstxt gen https://aurorasolar.com/eu/de/sitemap_index.xml > llms-eu.txt
           npx github:dotenvx/llmstxt gen https://help.aurorasolar.com/hc/sitemap.xml > llms-help.txt
