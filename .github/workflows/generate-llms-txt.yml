@@ -45,17 +45,6 @@ jobs:
           npx github:dotenvx/llmstxt gen https://help.aurorasolar.com/hc/sitemap.xml > llms-help.txt
           npx github:dotenvx/llmstxt gen https://docs.aurorasolar.com/sitemap.xml > llms-docs.txt
           npx github:dotenvx/llmstxt gen https://helioscope.aurorasolar.com/sitemap_index.xml > llms-helioscope.txt
-
-      - name: Upload TXT files as artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: llms-txt-files
-          path: |
-            llms.txt
-            llms-eu.txt
-            llms-help.txt
-            llms-docs.txt
-            llms-helioscope.txt
             
       - name: Upload files to WordPress server via SSH
         run: |
@@ -63,6 +52,8 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H 34.94.122.55 >> ~/.ssh/known_hosts
-      
-          scp llms*.txt ssh aurorasolarmulti@34.94.122.55 -p 29986:/www/aurorasolarmulti_703/public/
+          
+          scp -i ~/.ssh/id_ed25519 -P ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=yes \
+            llms*.txt ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/your/target/path/
+
 
