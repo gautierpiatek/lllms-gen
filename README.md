@@ -1,7 +1,7 @@
 # lllms-gen
 Generate llms.txt file for Aurora Solar websites
 
-“llms.txt is a zero-code ‘API’ to our own content—one URL that every current and future AI teammate can load in seconds to speak our brand language, cite the right sources, and cut token spend by up to 80 percent.”  ￼
+lms.txt is a zero-code ‘API’ to our own content—one URL that every current and future AI can reference, to generate fast and factual answers about Aurora.  ￼
 
 
 ## Benefits
